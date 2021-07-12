@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<script src = "https:ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+<meta charset="utf-8">
+<title> angular js </title>
+</head>
+
+<div ng-app="wedoangular" ng-controller="mycontroller">
+
+<form name="userForm" novalidate>
+
+  <label>Username:</label>
+  <input type="text" id="name" name="user" ng-model="user" required>
+  <span style="color:red" ng-show="userForm.user.$invalid">
+  <span ng-show="userForm.user.$error.required">Username is required. It cannot be blank</span>
+  </span>
+  <br><br>
+
+  <label>Email:</label>
+  <input type="email" id="email" name="email" ng-model="email" required>
+  <span style="color:red" ng-show="userForm.email.$invalid">
+  <span ng-show="userForm.email.$error.required">Email is required. It cannot be blank</span>
+  <span ng-show="userForm.email.$error.email">Please enter a valid email.</span>
+  </span>
+  <br><br>
+  <label>Number:</label>
+  <input id="number" ng-model = "number">
+  <br><br>
+  <label>Password</label>
+  <input type="password" id="psd" ng-model="Password" name="psd" value="" placeholder="Password" required>
+  <br><br>
+
+
+    <p>
+    <input type="submit" ng-click="addrecords() ; stringf() ; nubr()" ng-disabled="userForm.user.$invalid && userForm.email.$invalid">
+    <button  ng-click ="deletedata()"  type="button" name="button"> Delete</button>
+    </p>
+
+</form>
+<p style="color:red">{{erroemsg}}</p>
+
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Number</th>
+    <th>Password</th>
+  </tr>
+  <tbody ng-repeat="m in recordlist">
+  <tr>
+  <td>{{m.name}}</td>
+  <td>{{m.Email}}</td>
+  <td>{{m.number}}</td>
+  <td>{{m.password}}</td>
+  <td><input type="button"  ng-click="remove($index)" value="Remove" /></td>
+  </tr>
+</tbody>
+<tfoot>
+</table>
+
+<br><br>
+<h2> Cheking for String  and Number values: </h2>
+<br>
+<P>
+<h5>UserName is string:  {{isString1}}</h5>
+<h5>Password is string:  {{isString2}}</h5>
+<h5>Number is Number:    {{isNumber1}}</h5>
+
+</p>
+
+</div>
+</body>
+
+<script type="text/javascript">
+
+var app = angular.module("wedoangular",[]);
+    app.controller('mycontroller',function($scope){
+      $scope.recordlist= [{'name':'shalini', 'Email': 'tripathishalini@345gamil.com','number': 9965432698, 'password': 'jrebf '},
+      {'name':'akash', 'Email': 'akash@789gamil.com','number': 9892654320, 'password': '23eff'},
+      {'name':'arooz', 'Email': 'aroozz78@gamil.com', 'number': 9960987650,'password': '2rfsda'},
+      {'name':'komal', 'Email': 'komal@345.com', 'number': 9865426780,'password': 'mgkbek'},]
+
+     $scope.addrecords = function(){
+        var username1 = document.getElementById('name').value;
+        var useremail = document.getElementById('email').value;
+        var num = document.getElementById('number').value;
+        var pswd = document.getElementById('psd').value;
+
+        $scope.recordlist.push({'name': username1, 'Email':useremail,  'number':num, 'password':pswd });
+
+                }
+
+
+                      $scope.deletedata = function(){
+                      $scope.recordlist.pop();
+                        }
+
+                    $scope.remove = function (index) {
+                    var name = $scope.recordlist[index].Name;
+                    if ("Do you want to delete: " + name) {
+                      $scope.recordlist.splice(index, 1);
+                    }
+                }
+
+$scope.stringf = function(){
+
+  $scope.isString1 = angular.isString(name);
+  $scope.isString2 = angular.isString(psd);
+
+
+}
+$scope.nubr= function(){
+    $scope.isNumber1 =  angular.isNumber(number);
+}
+
+    });
+
+</script>
+</html>
